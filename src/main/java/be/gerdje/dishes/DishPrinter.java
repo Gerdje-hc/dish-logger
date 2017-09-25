@@ -19,7 +19,7 @@ public class DishPrinter {
         System.out.println(dish.getName());
         System.out.println("-------------------");
         System.out.println("User: " + dish.getUser());
-        System.out.println("Location: " + dish.getLocationName() + " (" + dish.getLocation() + ")");
+        System.out.println("Location: " + dish.getLocation());
         System.out.println("Description: " + dish.getDescription());
         System.out.println("Dish types: " + dish.getTypes());
         System.out.println("Image size: " + dish.getImage().length);

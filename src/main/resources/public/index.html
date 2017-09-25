@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    </head>
+    <body>
+
+        <div class="container">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select your dish...
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><a href="#">Spaghetti Bolognaise</a></li>
+                    <li><a href="#">Salade Nicoise</a></li>
+                    <li><a href="#">Eggs Benedict</a></li>
+                    <li><a href="#">Asperges op Vlaamse Wijze</a></li>
+
+                </ul>
+            </div>
+            <h2 class="jumbotron" id="dish-name">Gerecht naam</h2>
+            <img src="images/spaghetti.jpg" class="img-responsive img-thumbnail"/>
+            <div class="row">
+                <div class="col-sm-2 bg-primary">Naam locatie</div>
+                <div class="col-sm-10" id="dish-location-name">Grimbergen</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 bg-info">Beschrijving</div>
+                <div class="col-sm-10" id="dish-description">Lekkere spaghetti bla bla bla</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 bg-warning">Gebruiker Reacties</div>
+                <div class="col-sm-10" id="comments">Nice, I am going to tell Bobby all about this</div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
+        <script>
+            var id = 1000;
+            $.getJSON('/api/dish/' + id, function(dish) {
+                $("#dish-name").text(dish.name);
+                $("#dish-type-name").text(dish.type.name);
+                $("#dish-location-name").text(dish.location.name);
+                $("#dish-description").text(dish.description);
+            });
+        </script>
+    </body>
+</html>

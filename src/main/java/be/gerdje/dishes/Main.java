@@ -11,6 +11,8 @@ public class Main {
 
         DishPrinter printer = ac.getBean(DishPrinter.class);
         printer.print(1000);
+        printer.print(2000);
+        printer.print(3000);
 
     }
 }

@@ -1,5 +1,6 @@
 package be.gerdje.dishes.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -9,6 +10,8 @@ import javax.persistence.Embeddable;
 public class Location {
     private String latitude;
     private String longitude;
+
+    @Column(name = "location_name")
     private String name;
 
     /**
