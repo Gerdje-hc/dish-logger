@@ -17,8 +17,7 @@ public class Dish {
     @Column(nullable = false)
     private String name;
 
-    @Lob
-    private byte[] image;
+    private String image;
 
     @Embedded
     private Location location;
@@ -52,11 +51,11 @@ public class Dish {
         this.name = name;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

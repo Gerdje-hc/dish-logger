@@ -22,7 +22,7 @@ public class DishPrinter {
         System.out.println("Location: " + dish.getLocation());
         System.out.println("Description: " + dish.getDescription());
         System.out.println("Dish types: " + dish.getTypes());
-        System.out.println("Image size: " + dish.getImage().length);
+        System.out.println("Image: " + dish.getImage());
         System.out.println("Comments: ");
         for (Comment comment : dish.getComments()) {
             System.out.println("\t- " + comment.getDate() + " " + comment.getUser().getAlias() + " \"" + comment.getMessage() + "\"");

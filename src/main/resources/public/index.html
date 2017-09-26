@@ -7,13 +7,62 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+        <style>
+            .commentusername {
+                font-weight: bold;
+            }
+
+            #comments > div {
+                margin: 1rem;
+                border: 1px dotted red;
+            }
+        </style>
+
     </head>
     <body>
 
         <div class="container">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="#" class="navbar-brand">The Dish Logger</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="mainNavBar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Add a new dish</a></li>
+                            <li><a href="#">See all dishes</a></li>
+                            <li><a href="#">Register</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+
+            <form>
+                <div class="form-group">
+                    <select id="dish-selector" class="form-control">
+                        <option value="1000">Spaghetti Bolognaise</option>
+                        <option value="2000">Salade Nicoise</option>
+                        <option value="3000">Eggs Benedict</option>
+                        <option value="4000">Asperges op Vlaamse Wijze</option>
+                    </select>
+                </div>
+            </form>
+
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-default dropdown-toggle" id="select-dish" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Select your dish...
                     <span class="caret"></span>
                 </button>
@@ -26,18 +75,22 @@
                 </ul>
             </div>
             <h2 class="jumbotron" id="dish-name">Gerecht naam</h2>
-            <img src="images/spaghetti.jpg" class="img-responsive img-thumbnail"/>
+            <img id="dish-image" src="images/spaghetti.jpg" class="img-responsive img-thumbnail"/>
             <div class="row">
-                <div class="col-sm-2 bg-primary">Naam locatie</div>
+                <div class="col-sm-2 bg-info">Locatie:</div>
                 <div class="col-sm-10" id="dish-location-name">Grimbergen</div>
             </div>
             <div class="row">
-                <div class="col-sm-2 bg-info">Beschrijving</div>
+                <div class="col-sm-2 bg-info">Soort gerecht:</div>
+                <div class="col-sm-10" id="dish-type-name">Lekkere spaghetti bla bla bla</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2 bg-info">Beschrijving:</div>
                 <div class="col-sm-10" id="dish-description">Lekkere spaghetti bla bla bla</div>
             </div>
             <div class="row">
-                <div class="col-sm-2 bg-warning">Gebruiker Reacties</div>
-                <div class="col-sm-10" id="comments">Nice, I am going to tell Bobby all about this</div>
+                <div class="col-sm-2 bg-warning">Comments:</div>
+                <div class="col-sm-10" id="comments">dummy</div>
             </div>
         </div>
 
@@ -53,13 +106,34 @@
 
 
         <script>
-            var id = 1000;
-            $.getJSON('/api/dish/' + id, function(dish) {
-                $("#dish-name").text(dish.name);
-                $("#dish-type-name").text(dish.type.name);
-                $("#dish-location-name").text(dish.location.name);
-                $("#dish-description").text(dish.description);
+
+            loadAndShowDish(1000);
+
+            $('#dish-selector').change(function() {
+                loadAndShowDish(this.value);
             });
+
+            function loadAndShowDish(id) {
+                $.getJSON('/api/dish/' + id, function(dish) {
+                    $("#dish-name").text(dish.name);
+                    $("#dish-type-name").text(dish.types.join(', '));
+                    $("#dish-location-name").text(dish.location.name + " (" + dish.location.latitude + ", " + dish.location.longitude + ")");
+                    $("#dish-description").text(dish.description);
+                    $("#dish-image").attr("src", dish.image);
+
+                    let $c = $("#comments").empty()
+                    for(let c of dish.comments) {
+                        $c.append($("<div>")
+                            .append($("<div>").addClass("commentusername").text(c.user.alias))
+                            .append($("<div>").addClass("commentrating").text("Rating: " + c.rating + " stars"))
+                            .append($("<div>").text(c.date))
+                            .append($("<div>").text(c.message)
+                        ));
+                    }
+                });
+            }
+
+
         </script>
     </body>
 </html>
